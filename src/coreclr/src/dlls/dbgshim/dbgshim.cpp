@@ -702,7 +702,13 @@ RegisterForRuntimeStartup(
     __in PVOID parameter,
     __out PVOID *ppUnregisterToken)
 {
-    return RegisterForRuntimeStartupEx(dwProcessId, NULL, pfnCallback, parameter, ppUnregisterToken);
+    LPCWSTR lpApplicationGroupId =
+#ifdef TARGET_UNIX
+        u"UBF8T346G9.ms";
+#else
+        nullptr;
+#endif
+    return RegisterForRuntimeStartupEx(dwProcessId, lpApplicationGroupId, pfnCallback, parameter, ppUnregisterToken);
 }
 //-----------------------------------------------------------------------------
 // Public API.
@@ -1723,7 +1729,13 @@ CreateDebuggingInterfaceFromVersionEx(
     __in LPCWSTR szDebuggeeVersion,
     __out IUnknown ** ppCordb)
 {
-    return CreateDebuggingInterfaceFromVersion2(iDebuggerVersion, szDebuggeeVersion, NULL, ppCordb);
+    LPCWSTR lpApplicationGroupId =
+#ifdef TARGET_UNIX
+        u"UBF8T346G9.ms";
+#else
+        nullptr;
+#endif
+    return CreateDebuggingInterfaceFromVersion2(iDebuggerVersion, szDebuggeeVersion, lpApplicationGroupId, ppCordb);
 }
 
 //-----------------------------------------------------------------------------
